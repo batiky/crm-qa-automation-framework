@@ -148,6 +148,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>test-local-chrome</id>
+		</profile>
+	</profiles>
 
 
 </project>

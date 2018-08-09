@@ -16,7 +16,10 @@ public class TenantManagerListOfProjectsPage {
     	PageFactory.initElements(driver, this);
     }
     
-    @FindBy(id="")
-    public WebElement something;
+    @FindBy(xpath="//i[contains(text(),'add')]")
+    public WebElement createProjectButton;
+
+    @FindBy(xpath="//h4[contains(text(),'PROJECT LIST')]")
+    public WebElement projectList;
 
 }

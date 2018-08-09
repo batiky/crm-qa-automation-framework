@@ -1,9 +1,15 @@
 package com.maximus.crm.utilities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import com.maximus.crm.pages.LoginPage;
+import com.maximus.crm.pages.ProjectDetailsPage;
+import com.maximus.crm.pages.TenantManagerListOfProjectsPage;
+import cucumber.api.java.et.Ja;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -15,9 +21,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import com.google.common.base.Function;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 public class BrowserUtils {
+
+	LoginPage loginPage = new LoginPage();
+	TenantManagerListOfProjectsPage tenantManagerListOfProjectsPage = new TenantManagerListOfProjectsPage();
+	ProjectDetailsPage projectDetailsPage = new ProjectDetailsPage();
+	Logger logger = Logger.getLogger(BrowserUtils.class);
+
 
 	public static void scrollDown() {
 		JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
@@ -27,7 +41,7 @@ public class BrowserUtils {
 	public static List<String> getElementsText(By locator) {
 
 		List<WebElement> elems = Driver.getDriver().findElements(locator);
-		List<String> elemTexts = new ArrayList<String>();
+		List<java.lang.String> elemTexts = new ArrayList<>();
 		for (WebElement el : elems) {
 			if (!el.getText().isEmpty()) {
 				elemTexts.add(el.getText());
@@ -119,5 +133,133 @@ public class BrowserUtils {
 		}
 		return elemText;
 	}
+
+	/*
+	 * This method is created by Shilpa
+	 * */
+	public void highLightElement(WebElement element) {
+		staticWait(100);
+		logger.info("Started Executing the Java Script ");
+		JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+		js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid red;');", element);
+		try {
+			Thread.sleep(1000);
+			logger.info("Executed and HighLighted");
+		} catch (InterruptedException e) {
+			System.out.print(e.getMessage());
+		}
+
+	}
+
+	public void clearAndFillText(WebElement element, String text) {
+		element.clear();
+		staticWait(500);
+		element.sendKeys(text);
+	}
+
+	public void staticWait(int timeInMilliSeconds) {
+		try {
+			Thread.sleep(timeInMilliSeconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String randomEmailId() {
+		String n = UUID.randomUUID().toString().substring(30);
+		String s = new SimpleDateFormat("HH:mm:ss.SSS").format(new Date()).toString().replaceAll(":", "").
+				replaceAll("", "").replaceAll("-", "").replace(".", "")
+				.substring(2);
+		String email = "test" + n + s + "@gmail.com";
+		return email;
+	}
+
+	public void login(String userName, String password) {
+		clearAndFillText(loginPage.userName, userName);
+		clearAndFillText(loginPage.password, password);
+		loginPage.submitButton.click();
+
+	}
+	public String getCurrentDateWithFormat(){
+		Date currentDate=new Date();
+		String DATE_FORMAT = "MMddyyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		String actualDate=sdf.format(currentDate);
+		return actualDate;
+
+	}
+
+	public String getFutureYearWithCurrentdate(int year ){
+		String DATE_FORMAT = "MMddyyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.YEAR,year);
+		 return sdf.format(cal.getTime());
+
+	}
+
+
+	public void createAndSave(String projectName, String programName, String contractId, String clientName) {
+		clearAndFillText(projectDetailsPage.projectName, projectName);
+		projectDetailsPage.state.click();
+		hover(projectDetailsPage.state);
+		projectDetailsPage.AR.click();
+		clearAndFillText(projectDetailsPage.programName, programName);
+		clearAndFillText(projectDetailsPage.contractId, contractId);
+		clearAndFillText(projectDetailsPage.stateAgencyName, clientName);
+		projectDetailsPage.provisioningStatus.click();
+		hover(projectDetailsPage.provisioningStatus);
+		projectDetailsPage.activeStatus.click();
+		System.out.print("Clicked");
+		//staticWait(5000);
+		hover(projectDetailsPage.saveButton);
+		highLightElement(projectDetailsPage.saveButton);
+		projectDetailsPage.saveButton.click();
+		highLightElement(projectDetailsPage.saveButton);
+	}
+
+	public void addContractDateAndSaveCurrentDate(String projectName, String programName, String contractId, String clientName, String startDate) {
+		clearAndFillText(projectDetailsPage.projectName, projectName);
+		projectDetailsPage.state.click();
+		hover(projectDetailsPage.state);
+		projectDetailsPage.AR.click();
+		clearAndFillText(projectDetailsPage.programName, programName);
+		clearAndFillText(projectDetailsPage.contractId, contractId);
+		clearAndFillText(projectDetailsPage.stateAgencyName, clientName);
+		clearAndFillText(projectDetailsPage.contractStartDate, startDate);
+		clearAndFillText(projectDetailsPage.contractEndDate, startDate);
+		projectDetailsPage.provisioningStatus.click();
+		hover(projectDetailsPage.provisioningStatus);
+		projectDetailsPage.activeStatus.click();
+		System.out.print("Clicked");
+		//staticWait(5000);
+		hover(projectDetailsPage.saveButton);
+		highLightElement(projectDetailsPage.saveButton);
+		projectDetailsPage.saveButton.click();
+		highLightElement(projectDetailsPage.saveButton);
+	}
+	public void addContractDateAndSaveCurrentDateAndEndDate(String projectName, String programName, String contractId, String clientName, String startDate, String endDate) {
+		clearAndFillText(projectDetailsPage.projectName, projectName);
+		projectDetailsPage.state.click();
+		hover(projectDetailsPage.state);
+		projectDetailsPage.AR.click();
+		clearAndFillText(projectDetailsPage.programName, programName);
+		clearAndFillText(projectDetailsPage.contractId, contractId);
+		clearAndFillText(projectDetailsPage.stateAgencyName, clientName);
+		clearAndFillText(projectDetailsPage.contractStartDate, startDate);
+		clearAndFillText(projectDetailsPage.contractEndDate, endDate);
+		projectDetailsPage.provisioningStatus.click();
+		hover(projectDetailsPage.provisioningStatus);
+		projectDetailsPage.activeStatus.click();
+		System.out.print("Clicked");
+		//staticWait(5000);
+		hover(projectDetailsPage.saveButton);
+		highLightElement(projectDetailsPage.saveButton);
+		projectDetailsPage.saveButton.click();
+		highLightElement(projectDetailsPage.saveButton);
+	}
+
+
+
 
 }
