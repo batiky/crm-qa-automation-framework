@@ -69,17 +69,13 @@ public class TMProjectListPage {
         element.findElement(By.className(expendButtonClass)).click();
     }
 
-    public void search (){
-      // waitForPageToLoad(5000).search.click();
-
-    }
-
 
     public void scrollIntoView(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView()", element);
     }
 
+    /*this method reads and returns a list of project details of an existing N-amount of project */
     public List<String> projectInfo(int projNum) {
         List<String> projectInfoText = new ArrayList<>();
 
