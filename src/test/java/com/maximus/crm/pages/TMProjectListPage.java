@@ -26,6 +26,8 @@ public class TMProjectListPage {
         PageFactory.initElements(driver, this);
     }
 
+    public final String searchDropDownList = "//*[@id='react-autowhatever-1']//li";
+
     @FindBy(xpath="//label[starts-with(text(), 'State')]/..//input ")
     public WebElement searchByState;
 

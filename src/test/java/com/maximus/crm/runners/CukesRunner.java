@@ -9,7 +9,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 				"html:target/cucumber-report",
 				"json:target/cucumber.json"
 		},
-		tags = "@demo",
+		tags = "@thisone",
 		features = {"src/test/resources/com/maximus/crm/features"},
 		glue = "com/maximus/crm/step_definitions",
 		dryRun= false

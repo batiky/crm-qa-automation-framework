@@ -157,6 +157,9 @@ public class BrowserUtils {
 		element.sendKeys(text);
 	}
 
+/*
+this is duplicate of line 102 <public static void wait(){}>/
+ */
 	public void staticWait(int timeInMilliSeconds) {
 		try {
 			Thread.sleep(timeInMilliSeconds);

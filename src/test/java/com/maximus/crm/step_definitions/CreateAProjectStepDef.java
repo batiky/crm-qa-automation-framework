@@ -47,13 +47,15 @@ public class CreateAProjectStepDef extends BrowserUtils {
 
     }
 
-
+    /*following step is using and duplicating an existing Step/s
+     * the original feature line/s should be used*/
     @Given("I am on the Home Page")
     public void i_am_on_the_home_page(){
         i_logged_into_Tenant_Manager_Project_list_page();
 
     }
-
+    /*following step is using and duplicating an existing Step/s
+     * the original feature line/s should to be used*/
     @When("I click on the Create new Project")
     public void i_click_on_the_create_new_project(){
 
@@ -76,7 +78,8 @@ public class CreateAProjectStepDef extends BrowserUtils {
 
     }
 
-
+    /*following step is using and duplicating an existing Step/s
+     * the original feature line/s need/s to be used*/
     @Given("I am on the Project Contact Details Page")
     public void i_am_on_the_project_contact_details_page(){
         i_logged_into_Tenant_Manager_Project_list_page();

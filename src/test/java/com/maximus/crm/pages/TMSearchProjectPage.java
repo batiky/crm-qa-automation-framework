@@ -30,4 +30,6 @@ public class TMSearchProjectPage {
     public void clear(){
         clearButton.click();
     }
+
+
 }
